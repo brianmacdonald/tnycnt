@@ -1,0 +1,17 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+
+{% block head_title %}
+	{{ status }} {% trans "contact form" %}
+{% endblock %}
+
+{% block body %}
+<h2>{{ status }} {% trans "contact form" %}</h2>
+<div id="form_box">
+	<form method="post" action="">
+	        {{ form.as_p }}
+	<p class="email-address">{% trans "Email address" %}: {{ user.email }}</p>        
+	<input class="submit" type="submit" value="{{ status }}" />
+	</form>
+</div>
+{% endblock %}

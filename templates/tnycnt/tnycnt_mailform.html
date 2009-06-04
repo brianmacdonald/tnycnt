@@ -1,0 +1,22 @@
+{% extends "site_base.html" %}
+
+{% block head_title %}
+	{{ object.title }}
+{% endblock %}
+
+{% block body %}
+
+<h2>{{ object.title }}</h2>
+
+{% if message %}<p>{{ message }}</p>{% endif %}
+
+<p>{{ object.description }}</p>
+
+<div id="form_box">
+	<form method="post" action="">
+	        {{ form.as_p }}
+	        {{ html_captcha|safe }}
+	<input class="submit" type="submit" value="Send" />
+	</form>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+tnycnt
+=========
+
+Team Members:
+----------
+Brian Macdonald
+
+Background:
+-----------
+Built for Django Dash 2009. Not the most complicated app. I didn't have that much time to work on this and wanted something I knew I could finish in a handful of hours.
+
+Description:
+------------
+Simple user created contact forms for one-way messaging.
+
+Example use: If your using Twitter and you would like your followers to send you a message without using an @reply, following them to use direct message or giving out you email address. Simply put the url this creates in your update. 
+
+Example URL:
+------------
+http://tnycnt.com/ 
+
+Third Party Code Used for site:
+------------
+django-registration http://bitbucket.org/ubernostrum/django-registration/wiki/Home
+django-pagination http://github.com/ericflo/django-pagination/tree/master
+python recaptcha-client http://pypi.python.org/pypi/recaptcha-client
+
+Install:
+------------
+Settings file will need some additions:
+RECAPTCHA_PUB_KEY 
+RECAPTCHA_PRIVATE_KEY 
+DEFAULT_FROM_EMAIL
+TNYCNT_MAIL_SUBJECT
+
+Having these might be a good idea:
+EMAIL_DEBUG 
+EMAIL_HOST
+EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD 
+CONTACT_EMAIL
+
+Possible future enhancements:
+------------
+ - Custom form fields
+ - Message inbox

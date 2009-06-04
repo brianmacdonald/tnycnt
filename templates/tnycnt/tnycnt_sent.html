@@ -1,0 +1,15 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+
+{% block head_title %}
+	{% trans "Message sent" %} 
+{% endblock %}
+
+
+{% block body %}
+
+	<h2>{% trans "Message sent" %}</h2>
+
+	<p><a href="{% url auth_login %}">{% trans "Log in" %}</a> {% trans "or" %} <a href="{% url registration_register %}">{% trans "Sign up" %}</a> {% trans "to create your own" %}.</p>
+
+{% endblock %}

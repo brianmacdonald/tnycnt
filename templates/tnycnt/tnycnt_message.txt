@@ -1,0 +1,6 @@
+{% load i18n %}
+{% trans "Message at" %} {{ site_name }}:
+{% trans "Form" %}: {{ title }}
+{% trans "Subject" %}: {{ subject }}
+{% trans "From" %}: {{ email }}
+{% trans "Message" %}: {{ body }}

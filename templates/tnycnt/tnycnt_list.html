@@ -1,0 +1,47 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+
+{% load pagination_tags %}
+
+{% block head_title %}
+	{% trans "Contact Forms for" %} {{ user.username }} 
+{% endblock %}
+
+
+{% block body %}
+
+	{% autopaginate object_list 5 %}
+	    	
+	{% if object_list %}
+	<table id="contact-form-list">
+	<tr>
+		<th>{% trans "Title" %}</th>
+		<th>{% trans "Public Url" %}</th>
+		<th>{% trans "Active" %}</th>
+		<th>{% trans "Edit" %}</th>
+	</tr>
+		{% for object in object_list %}
+		<tr>
+			<td class="title">
+				{{ object.title }}
+			</td>
+			<td>
+				<input value="http://{{ domain }}{% url tnycnt_mailform object.hash %}" class="url" type="text" readonly="readonly"/>
+			</td>
+			<td>
+				{{ object.is_active|yesno|capfirst }}
+			</td>
+			<td>
+				<a href="{% url tnycnt_edit object.id %}">{% trans "Edit" %}</a>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+	{% paginate %}
+	    
+	{% else %}    
+	    {% trans "No contact forms found" %}. <a href="{% url tnycnt_new %}">{% trans "Create one" %}.</a>
+	{% endif %}	
+	
+</table>
+{% endblock %}
