@@ -12,12 +12,12 @@ class Contact(models.Model):
     Model for User created contact forms. 
     hash is created randomly 
     """
-    title       = models.CharField(_('Title'),max_length=255,)
+    title = models.CharField(_('Title'),max_length=255,)
     description = models.TextField(_('Description'), null=True)
-    user        = models.ForeignKey(User)
-    hash        = models.CharField(max_length=6, db_index=True, blank=True, unique=True, default=None)
-    created_at  = models.DateTimeField(_('Created at'), default=datetime.now)
-    is_active   = models.BooleanField(_('Active'), default=False)
+    user = models.ForeignKey(User)
+    hash = models.CharField(max_length=6, db_index=True, blank=True, unique=True, default=None)
+    created_at = models.DateTimeField(_('Created at'), default=datetime.now)
+    is_active = models.BooleanField(_('Active'), default=False)
     
     def save(self, **kw):
         if self.hash == None:
