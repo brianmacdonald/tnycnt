@@ -2,4 +2,6 @@
  /__init__.py
  settings.py
  manage.py
- *.sqlite
+*.sqlite
+/recaptcha
+/templates
