@@ -17,7 +17,16 @@ from django.template.loader import render_to_string
 from models import Contact
 from forms import ContactForm, ContactMailForm
 
-from recaptcha.client import captcha
+try:
+    from recaptcha.client import captcha
+except ImportError:
+    raise ImportError, 'Please install reCAPTCHA clinet. See http://pypi.python.org/pypi/recaptcha-client.' 
+
+try:
+    from settings import RECAPTCHA_PRIVATE_KEY
+    from settings import RECAPTCHA_PUB_KEY
+except ImportError:
+    raise ImportError, 'Please enter valid reCAPTCHA api private and public keys in the projects settings file.'
 
 def view_form(request, hash, not_active_template = 'tnycnt/tnycnt_not_active.html', 
               form_template = 'tnycnt/tnycnt_mailform.html',
@@ -32,14 +41,16 @@ def view_form(request, hash, not_active_template = 'tnycnt/tnycnt_not_active.htm
     object = get_object_or_404(Contact, hash=hash)
     message = '' 
     if object.is_active == False:
-        return render_to_response(not_active_template, context_instance=RequestContext(request))
+        return render_to_response(not_active_template,
+                                  context_instance=RequestContext(request))
     if request.method == 'POST':
         # Captcha check
         check_captcha = captcha.submit(request.POST['recaptcha_challenge_field'],
-                        request.POST['recaptcha_response_field'], settings.RECAPTCHA_PRIVATE_KEY,
+                        request.POST['recaptcha_response_field'],
+                        RECAPTCHA_PRIVATE_KEY,
                         request.META['REMOTE_ADDR'])
         form = ContactMailForm(request.POST)
-        html_captcha = captcha.displayhtml(settings.RECAPTCHA_PUB_KEY)
+        html_captcha = captcha.displayhtml(RECAPTCHA_PUB_KEY)
         if check_captcha.is_valid is False:
             #captcha is wrong
             message = _('Captcha failed')
@@ -54,13 +65,17 @@ def view_form(request, hash, not_active_template = 'tnycnt/tnycnt_not_active.htm
                                             'subject':form.cleaned_data['subject'],
                                             'email':form.cleaned_data['email'],
                                             'body': form.cleaned_data['body'] })            
-                send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [object.user.email])
+                send_mail(subject, message, settings.DEFAULT_FROM_EMAIL,
+                          [object.user.email])
                 return HttpResponseRedirect(reverse('tnycnt_sent'))
     else:
         form = ContactMailForm()
         html_captcha = captcha.displayhtml(settings.RECAPTCHA_PUB_KEY)
     return render_to_response(form_template,
-                             {'form': form, 'html_captcha': html_captcha, 'object':object, 'message':message},
+                             {'form': form,
+                              'html_captcha': html_captcha,
+                              'object':object,
+                              'message':message},
                               context_instance=RequestContext(request))
 
 def list_forms(request, template_name = 'tnycnt/tnycnt_list.html'):
