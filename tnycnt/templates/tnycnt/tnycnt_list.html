@@ -1,16 +1,12 @@
 {% extends "site_base.html" %}
 {% load i18n %}
 
-{% load pagination_tags %}
-
 {% block head_title %}
 	{% trans "Contact Forms for" %} {{ user.username }} 
 {% endblock %}
 
 
 {% block body %}
-
-	{% autopaginate object_list 5 %}
 	    	
 	{% if object_list %}
 	<table id="contact-form-list">
@@ -37,8 +33,7 @@
 		</tr>
 		{% endfor %}
 	</table>
-	{% paginate %}
-	    
+		    
 	{% else %}    
 	    {% trans "No contact forms found" %}. <a href="{% url tnycnt_new %}">{% trans "Create one" %}.</a>
 	{% endif %}	
